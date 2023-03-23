@@ -1,0 +1,91 @@
+#include <stdio.h>
+#include <stdlib.h> 
+  
+// A linked list node 
+struct Node 
+{ 
+    int data; 
+    struct Node *next; 
+}; 
+  
+// Function to create a new node with given data 
+struct Node *newNode(int data) 
+{ 
+    // Allocate the new node 
+    struct Node *new_node = (struct Node *) malloc(sizeof(struct Node)); 
+  
+    // put in the data 
+    new_node->data = data; 
+    new_node->next = NULL; 
+    return new_node; 
+} 
+  
+// Function to insert a node at the end of a linked list 
+void append(struct Node **head_ref, int data) 
+{ 
+    // Create a new node 
+    struct Node *new_node = newNode(data); 
+  
+    // head_ref to store the address of head Node 
+    // in the linked list 
+    struct Node *last = *head_ref; 
+  
+    // If the Linked List is empty, 
+    // then make the new node as head 
+    if (*head_ref == NULL) 
+    { 
+        *head_ref = new_node; 
+        return; 
+    } 
+  
+    // Else traverse till the last node 
+    while (last->next != NULL) 
+        last = last->next; 
+  
+    // Change the next of last node 
+    last->next = new_node; 
+    return; 
+} 
+  
+// Function to search a given key in the linked list 
+int search(struct Node *head, int key) 
+{ 
+    // Initialize current to head 
+    struct Node *current = head; 
+  
+    // Traverse list till current not equal to NULL 
+    while (current != NULL) 
+    { 
+        // If current node data is equal to key 
+        // return true 
+        if (current->data == key) 
+            return 1; 
+  
+        // Go to next node 
+        current = current->next; 
+    } 
+  
+    // Key not found 
+    return 0; 
+} 
+  
+// Driver Code 
+int main() 
+{ 
+    int n;
+    scanf("%d",&n); 
+    struct Node *head = NULL; 
+    for(int i=0;i<n;i++){
+        int data;
+        scanf("%d",&data);
+        append(&head, data);
+    }
+    int key;
+    scanf("%d",&key);
+    if (search(head, key)) 
+        printf("yes"); 
+    else
+        printf("no"); 
+  
+    return 0; 
+}

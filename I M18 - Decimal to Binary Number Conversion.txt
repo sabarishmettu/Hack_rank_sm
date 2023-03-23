@@ -1,0 +1,17 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+void printBinary(unsigned long long n) {
+    if (n > 1) {
+        printBinary(n/2);
+    }
+    printf("%llu", n % 2);
+}
+
+int main() {
+    unsigned long long n;
+    scanf("%llu", &n);
+    printBinary(n);
+    printf("\n");
+    return 0;
+}

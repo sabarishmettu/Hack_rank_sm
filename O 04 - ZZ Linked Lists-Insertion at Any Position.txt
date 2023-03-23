@@ -1,0 +1,56 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct Node{
+    int data;
+    struct Node *next;
+};
+
+void insert_at_position(struct Node** head, int pos, int data){
+    int k = 1;
+    struct Node* current;
+    struct Node* p = (struct Node*)malloc(sizeof(struct Node));
+    p->data = data;
+    p->next = NULL;
+    
+    if (pos == 0){
+        p->next = *head;
+        *head = p;
+        return;
+    }
+    
+    current = *head;
+    while( (current != NULL) && (k < pos) ){
+        k++;
+        current = current->next;
+    }
+    
+    if (current != NULL){
+        p->next = current->next;
+        current->next = p;
+    }
+}
+
+void print_list(struct Node* head){
+    struct Node* temp = head;
+    while(temp != 0){
+        printf("%d",temp->data);
+        if (temp->next !=NULL)
+            printf("->");
+        temp = temp->next;
+    }
+    printf("\n");
+}
+
+int main(){
+    int n, data, pos, i;
+    struct Node* head = NULL;
+    
+    scanf("%d",&n);
+    for(i=0; i<n; i++){
+        scanf("%d%d",&pos, &data);
+        insert_at_position(&head, pos, data);
+    }
+    print_list(head);
+    return 0;
+}
