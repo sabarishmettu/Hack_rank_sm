@@ -1,0 +1,71 @@
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include <stdlib.h>
+
+struct node {
+    int data;
+    struct node *next;
+};
+
+struct node *create_linked_list(int n) {
+    struct node *head = NULL;
+    struct node *prev = NULL;
+    int i;
+    for (i = 0; i < n; i++) {
+        int data;
+        scanf("%d", &data);
+        struct node *temp = (struct node*)malloc(sizeof(struct node));
+        temp->data = data;
+        temp->next = NULL;
+        if (head == NULL) {
+            head = temp;
+            prev = temp;
+        } else {
+            prev->next = temp;
+            prev = temp;
+        }
+    }
+    return head;
+}
+
+void delete_at_k(struct node **head, int k) {
+    struct node *temp = *head;
+    struct node *temp2 = temp;
+    int i;
+    for (i = 0; i < k; i++) {
+        temp = temp->next;
+    }
+    if (k == 0) {
+        *head = temp->next;
+    } else {
+        for (i = 0; i < k - 1; i++) {
+            temp2 = temp2->next;
+        }
+        temp2->next = temp->next;
+    }
+    free(temp);
+    return;
+}
+
+void print_list(struct node *head) {
+    while (head != NULL) {
+        printf("%d", head->data);
+        if (head->next != NULL)
+            printf("->");
+        head = head->next;
+    }
+}
+
+int main() {
+
+    int n;
+    scanf("%d", &n);
+    struct node *head = create_linked_list(n);
+    int k;
+    scanf("%d", &k);
+    delete_at_k(&head, k);
+    print_list(head);
+    printf("\n");
+    return 0;
+}
