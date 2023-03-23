@@ -1,0 +1,83 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+
+struct Node
+{
+    int data;
+    struct Node* next;
+};
+
+void printList(struct Node *n) 
+{ 
+    while (n != NULL) 
+    { 
+        printf("%d", n->data); 
+        if (n->next != NULL)
+            printf("->");
+        n = n->next; 
+    } 
+} 
+
+void insertAtEnd(struct Node** head,int data)
+{
+    struct Node* new_node=(struct Node*)malloc(sizeof(struct Node));
+    new_node->data=data;
+    new_node->next=NULL;
+    if(*head==NULL)
+    {
+        *head=new_node;
+        return;
+    }
+    struct Node* tail=*head;
+    while(tail->next!=NULL)
+    {
+        tail=tail->next;
+    }
+    tail->next=new_node;
+}
+
+void deleteAtEnd(struct Node** head,int k)
+{
+    struct Node* temp=*head;
+    struct Node* prev;
+    int count=0;
+    while(temp!=NULL)
+    {
+        prev=temp;
+        temp=temp->next;
+        count++;
+    }
+    if(k>=count)
+    {
+        *head=NULL;
+        return;
+    }
+    temp=*head;
+    int i;
+    for(i=0;i<count-k-1;i++)
+    {
+        temp=temp->next;
+    }
+    prev=temp;
+    temp=temp->next;
+    prev->next=NULL;
+    free(temp);
+}
+
+int main()
+{
+    int n,i,k;
+    scanf("%d",&n);
+    struct Node* head=NULL;
+    for(i=0;i<n;i++)
+    {
+        int data;
+        scanf("%d",&data);
+        insertAtEnd(&head,data);
+    }
+    scanf("%d",&k);
+    deleteAtEnd(&head,k);
+    printList(head);
+    return 0;
+}
